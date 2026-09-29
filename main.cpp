@@ -185,8 +185,44 @@ void recommendByGenre() {
     }
 }
 
+// Pick any title at random from the whole catalogue
+void surpriseMe() {
+    int index = rand() % TOTAL_TITLES;
+    cout << "\nHere's a surprise pick:\n";
+    printTitle(catalogue[index]);
+    recommendationsGiven++;
+}
+
+void printBanner() {
+    cout << "==================================================\n";
+    cout << "   NETFLIX RECOMMENDATION ASSISTANT (C++)\n";
+    cout << "   Inspired by Netflix Originals & viewer control\n";
+    cout << "==================================================\n";
+}
+
+void showMainMenu() {
+    cout << "\nMAIN MENU\n";
+    cout << "  1. Find a movie or series by genre\n";
+    cout << "  2. Surprise me\n";
+    cout << "  3. Exit\n";
+}
+
 int main() {
-    srand(static_cast<unsigned>(time(0)));   // different results each run
-    recommendByGenre();
+    srand(static_cast<unsigned>(time(0)));
+    printBanner();
+
+    int choice;
+    do {
+        showMainMenu();
+        choice = readChoice("Enter your choice (1-3): ", 1, 3);
+        switch (choice) {
+            case 1: recommendByGenre(); break;
+            case 2: surpriseMe();       break;
+            case 3:
+                cout << "\nYou viewed " << recommendationsGiven << " recommendation(s) this session.\n";
+                cout << "Goodbye and happy streaming!\n";
+                break;
+        }
+    } while (choice != 3);
     return 0;
 }
