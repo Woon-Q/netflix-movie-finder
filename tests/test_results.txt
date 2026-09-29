@@ -1,0 +1,16 @@
+Netflix Recommendation Assistant - test run
+-------------------------------------------
+PASS  T01  Exit straight away
+PASS  T02  Action movie recommendation
+PASS  T03  Romance series recommendation
+PASS  T04  Documentary, either format
+PASS  T05  Letters typed at main menu
+PASS  T06  Number out of range (9)
+PASS  T07  Ask for another until list runs out
+PASS  T08  Timeline - Streaming stage
+PASS  T09  Timeline - back to menu
+PASS  T10  Surprise me shows a title
+PASS  T11  Input ends unexpectedly (EOF)
+PASS  T12  Session counter reports 2 picks
+-------------------------------------------
+Passed: 12   Failed: 0
