@@ -115,6 +115,9 @@ string genreFromChoice(int choice) {
     }
 }
 
+// Number of suggestions shown in this session (reported when the user exits)
+int recommendationsGiven = 0;
+
 // Collect the catalogue positions that match the genre and format.
 // format: 1 = movie only, 2 = series only, 3 = either. Returns how many matched.
 int findMatches(const string& genre, int format, int matches[]) {
@@ -137,7 +140,17 @@ int findMatches(const string& genre, int format, int matches[]) {
     return count;
 }
 
-// Ask for genre + format, then show the first matching title
+// Shuffle the matches (Fisher-Yates) so suggestions vary and never repeat
+void shuffleMatches(int matches[], int count) {
+    for (int i = count - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        int temp = matches[i];
+        matches[i] = matches[j];
+        matches[j] = temp;
+    }
+}
+
+// Ask for genre + format, then show matches one at a time
 void recommendByGenre() {
     showGenreMenu();
     int g = readChoice("Pick a genre (1-7): ", 1, 7);
@@ -153,8 +166,23 @@ void recommendByGenre() {
         cout << "\nSorry, no titles match that combination.\n";
         return;
     }
+    shuffleMatches(matches, count);
     cout << "\nFound " << count << " match(es) in " << genre << ". Here is my pick:\n";
-    printTitle(catalogue[matches[0]]);
+
+    for (int shown = 0; shown < count; shown++) {
+        printTitle(catalogue[matches[shown]]);
+        recommendationsGiven++;
+
+        if (shown == count - 1) {                   // no more titles left
+            cout << "\nThat's every match for your choices.\n";
+            break;
+        }
+        cout << "\nWant another suggestion?\n  1. Yes\n  2. No, I'll watch this one\n";
+        if (readChoice("Your choice (1-2): ", 1, 2) == 2) {
+            cout << "\nEnjoy the show!\n";
+            break;
+        }
+    }
 }
 
 int main() {
