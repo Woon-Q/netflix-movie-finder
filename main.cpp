@@ -115,15 +115,50 @@ string genreFromChoice(int choice) {
     }
 }
 
-int main() {
+// Collect the catalogue positions that match the genre and format.
+// format: 1 = movie only, 2 = series only, 3 = either. Returns how many matched.
+int findMatches(const string& genre, int format, int matches[]) {
+    int count = 0;
+    for (int i = 0; i < TOTAL_TITLES; i++) {
+        bool genreOk = (catalogue[i].genre == genre);
+        bool formatOk;
+        if (format == 1) {
+            formatOk = !catalogue[i].isSeries;      // movies only
+        } else if (format == 2) {
+            formatOk = catalogue[i].isSeries;       // series only
+        } else {
+            formatOk = true;                        // either
+        }
+        if (genreOk && formatOk) {
+            matches[count] = i;
+            count++;
+        }
+    }
+    return count;
+}
+
+// Ask for genre + format, then show the first matching title
+void recommendByGenre() {
     showGenreMenu();
     int g = readChoice("Pick a genre (1-7): ", 1, 7);
     string genre = genreFromChoice(g);
-    cout << "\nAll " << genre << " titles:\n";
-    for (int i = 0; i < TOTAL_TITLES; i++) {
-        if (catalogue[i].genre == genre) {
-            printTitle(catalogue[i]);
-        }
+
+    cout << "\nWhat do you feel like watching?\n";
+    cout << "  1. A movie (one sitting)\n  2. A series (binge-watch)\n  3. Either\n";
+    int format = readChoice("Your choice (1-3): ", 1, 3);
+
+    int matches[TOTAL_TITLES];
+    int count = findMatches(genre, format, matches);
+    if (count == 0) {
+        cout << "\nSorry, no titles match that combination.\n";
+        return;
     }
+    cout << "\nFound " << count << " match(es) in " << genre << ". Here is my pick:\n";
+    printTitle(catalogue[matches[0]]);
+}
+
+int main() {
+    srand(static_cast<unsigned>(time(0)));   // different results each run
+    recommendByGenre();
     return 0;
 }
