@@ -28,6 +28,7 @@ const Title catalogue[] = {
     {"The Old Guard", "Action", false, 2020, "A team of immortal mercenaries protects the world while a new member joins their ranks."},
     {"6 Underground", "Action", false, 2019, "Six vigilantes who faked their own deaths try to take down the world's worst criminals."},
     {"Money Heist", "Action", true, 2017, "A criminal known as the Professor leads a crew in an elaborate heist on the Royal Mint of Spain."},
+    {"Rebel Ridge", "Action", false, 2024, "A former Marine confronts corruption and injustice in a small town."},
     {"The Gray Man", "Action", false, 2022, "A CIA operative becomes a target after uncovering a dangerous secret within his own agency."},
     // ---- Comedy ----
     {"Murder Mystery", "Comedy", false, 2019, "A couple's European vacation turns into a whodunit on a billionaire's yacht."},
