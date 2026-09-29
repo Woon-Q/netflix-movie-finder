@@ -193,6 +193,44 @@ void surpriseMe() {
     recommendationsGiven++;
 }
 
+// Netflix timeline - mirrors the stages on the Part 1 poster
+void showTimeline() {
+    cout << "\nNetflix Innovation Timeline (from our Part 1 poster):\n";
+    cout << "  1. Founded\n  2. Subscription\n  3. Streaming\n";
+    cout << "  4. Originals\n  5. DVD End\n  6. Digital\n  7. Back to main menu\n";
+    int stage = readChoice("Pick a stage (1-7): ", 1, 7);
+
+    switch (stage) {
+        case 1:
+            cout << "\n[1997] Founded on 29 Aug 1997 by Reed Hastings and Marc Randolph.\n"
+                 << "  Started as pay-per-rental DVDs by mail, challenging video stores.\n";
+            break;
+        case 2:
+            cout << "\n[1999] Monthly subscription introduced.\n"
+                 << "  Unlimited rentals with no due dates and no late fees.\n";
+            break;
+        case 3:
+            cout << "\n[2007] Streaming launched.\n"
+                 << "  \"Watch instantly\" let members stream over the internet.\n";
+            break;
+        case 4:
+            cout << "\n[2013] Netflix Originals begin to take off.\n"
+                 << "  House of Cards released a whole season at once and popularised binge-watching.\n"
+                 << "  Try it: choose Drama > Series in the recommender!\n";
+            break;
+        case 5:
+            cout << "\n[Sep 2023] DVD-by-mail service closed.\n"
+                 << "  The final red envelope shipped, completing the move to digital.\n";
+            break;
+        case 6:
+            cout << "\n[Today] Digital-only entertainment platform.\n"
+                 << "  On-demand viewing on any device, plus games and live events.\n";
+            break;
+        case 7:
+            return;                                     // back to main menu
+    }
+}
+
 void printBanner() {
     cout << "==================================================\n";
     cout << "   NETFLIX RECOMMENDATION ASSISTANT (C++)\n";
@@ -204,7 +242,8 @@ void showMainMenu() {
     cout << "\nMAIN MENU\n";
     cout << "  1. Find a movie or series by genre\n";
     cout << "  2. Surprise me\n";
-    cout << "  3. Exit\n";
+    cout << "  3. Netflix timeline (Part 1 poster)\n";
+    cout << "  4. Exit\n";
 }
 
 int main() {
@@ -214,15 +253,16 @@ int main() {
     int choice;
     do {
         showMainMenu();
-        choice = readChoice("Enter your choice (1-3): ", 1, 3);
+        choice = readChoice("Enter your choice (1-4): ", 1, 4);
         switch (choice) {
             case 1: recommendByGenre(); break;
             case 2: surpriseMe();       break;
-            case 3:
+            case 3: showTimeline();     break;
+            case 4:
                 cout << "\nYou viewed " << recommendationsGiven << " recommendation(s) this session.\n";
                 cout << "Goodbye and happy streaming!\n";
                 break;
         }
-    } while (choice != 3);
+    } while (choice != 4);
     return 0;
 }
