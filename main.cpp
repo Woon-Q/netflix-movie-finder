@@ -94,9 +94,36 @@ int readChoice(const string& prompt, int low, int high) {
     }
 }
 
+// Show the list of genres
+void showGenreMenu() {
+    cout << "\nChoose a genre:\n";
+    cout << "  1. Action\n  2. Comedy\n  3. Drama\n  4. Sci-Fi\n";
+    cout << "  5. Horror & Thriller\n  6. Romance\n  7. Documentary\n";
+}
+
+// Convert the menu number into a genre name using a switch statement
+string genreFromChoice(int choice) {
+    switch (choice) {
+        case 1: return "Action";
+        case 2: return "Comedy";
+        case 3: return "Drama";
+        case 4: return "Sci-Fi";
+        case 5: return "Horror & Thriller";
+        case 6: return "Romance";
+        case 7: return "Documentary";
+        default: return "";   // should never happen because input is validated
+    }
+}
+
 int main() {
-    cout << "Catalogue loaded: " << TOTAL_TITLES << " titles.\n";
-    int n = readChoice("Input test - enter a number 1-5: ", 1, 5);
-    cout << "You entered " << n << ".\n";
+    showGenreMenu();
+    int g = readChoice("Pick a genre (1-7): ", 1, 7);
+    string genre = genreFromChoice(g);
+    cout << "\nAll " << genre << " titles:\n";
+    for (int i = 0; i < TOTAL_TITLES; i++) {
+        if (catalogue[i].genre == genre) {
+            printTitle(catalogue[i]);
+        }
+    }
     return 0;
 }
