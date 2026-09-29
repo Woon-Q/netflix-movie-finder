@@ -74,8 +74,29 @@ void printTitle(const Title& t) {
     cout << "  ------------------------------------------------\n";
 }
 
+// Ask the user for a whole number between low and high.
+// Keeps asking until the input is valid (handles letters, symbols, out-of-range).
+int readChoice(const string& prompt, int low, int high) {
+    int value;
+    while (true) {
+        cout << prompt;
+        if (cin >> value && value >= low && value <= high) {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // clear rest of line
+            return value;
+        }
+        if (cin.eof()) {                        // input stream closed - stop cleanly
+            cout << "\nNo more input. Exiting program.\n";
+            exit(0);
+        }
+        cin.clear();                            // reset the error flag
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "  Invalid input. Please enter a number from " << low << " to " << high << ".\n";
+    }
+}
+
 int main() {
     cout << "Catalogue loaded: " << TOTAL_TITLES << " titles.\n";
-    printTitle(catalogue[0]);          // quick check that the data prints correctly
+    int n = readChoice("Input test - enter a number 1-5: ", 1, 5);
+    cout << "You entered " << n << ".\n";
     return 0;
 }
